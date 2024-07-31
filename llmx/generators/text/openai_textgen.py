@@ -11,6 +11,7 @@ class OpenAITextGenerator(TextGenerator):
     def __init__(
         self,
         api_key: str = os.environ.get("OPENAI_API_KEY", None),
+        base_url: str = os.environ.get("OPENAI_BASE_URL", None),
         provider: str = "openai",
         organization: str = None,
         api_type: str = None,
@@ -21,6 +22,7 @@ class OpenAITextGenerator(TextGenerator):
     ):
         super().__init__(provider=provider)
         self.api_key = api_key or os.environ.get("OPENAI_API_KEY", None)
+        self.base_url = base_url or os.environ.get("OPENAI_BASE_URL", None)
 
         if self.api_key is None:
             raise ValueError(
@@ -29,6 +31,7 @@ class OpenAITextGenerator(TextGenerator):
 
         self.client_args = {
             "api_key": self.api_key,
+            "base_url": self.base_url,
             "organization": organization,
             "api_version": api_version,
             "azure_endpoint": azure_endpoint,
